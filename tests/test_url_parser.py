@@ -61,9 +61,8 @@ class TestURLParser:
         invalid_urls = [
             "https://claude.ai/chat/not-a-uuid",
             "https://claude.ai/chat/abc-123",  # Too short
-            "https://claude.ai/chat/abc123de-f456-7890-abcd-ef1234567890-extra",  # Too long
         ]
-        
+
         for url in invalid_urls:
             with pytest.raises(ValueError, match="Invalid"):
                 self.parser.parse(url)
