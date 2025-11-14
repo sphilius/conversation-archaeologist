@@ -1,0 +1,125 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "conversation-archaeologist"
+version = "0.1.0"
+description = "Extract, analyze, and gain insights from Claude conversation history"
+authors = [
+    {name = "Boss", email = "boss@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+keywords = ["claude", "conversation", "extraction", "analysis", "mcp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "mcp>=0.9.0",
+    "playwright>=1.40.0",
+    "httpx>=0.25.0",
+    "pydantic>=2.5.0",
+    "python-dotenv>=1.0.0",
+    "rich>=13.7.0",
+    "typer>=0.9.0",
+    "dataclasses-json>=0.6.3",
+    "orjson>=3.9.10",
+    "loguru>=0.7.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.21.1",
+    "pytest-mock>=3.12.0",
+    "ruff>=0.1.8",
+    "black>=23.12.0",
+    "mypy>=1.7.1",
+    "pre-commit>=3.6.0",
+]
+docs = [
+    "mkdocs>=1.5.3",
+    "mkdocs-material>=9.5.0",
+]
+
+[project.scripts]
+extract-conversation = "scripts.extract:main"
+batch-extract = "scripts.batch_extract:main"
+show-metrics = "scripts.show_metrics:main"
+
+[project.urls]
+Homepage = "https://github.com/boss/conversation-archaeologist"
+Documentation = "https://github.com/boss/conversation-archaeologist/docs"
+Repository = "https://github.com/boss/conversation-archaeologist"
+Issues = "https://github.com/boss/conversation-archaeologist/issues"
+
+[tool.setuptools]
+packages = ["nano_agents", "mcp_server", "scripts"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --cov=nano_agents --cov=mcp_server"
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.coverage.run]
+source = ["nano_agents", "mcp_server"]
+omit = ["tests/*", "scripts/*"]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by black)
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311', 'py312']
+include = '\.pyi?$'
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
