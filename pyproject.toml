@@ -29,9 +29,10 @@ Documentation = "https://github.com/yourusername/claude-conversation-extractor/d
 Repository = "https://github.com/yourusername/claude-conversation-extractor"
 Issues = "https://github.com/yourusername/claude-conversation-extractor/issues"
 
-[project.scripts]
-claude-extract = "claude_extractor.cli:main"
-claude-extractor = "claude_extractor.cli:main"
+# [project.scripts]
+# Phase 1: Use python scripts/extract.py
+# Phase 2: Will add installable CLI command
+# claude-extract = "claude_extractor.cli:main"
 
 [tool.black]
 line-length = 100
@@ -81,7 +82,7 @@ addopts = [
     "-ra",
     "--strict-markers",
     "--strict-config",
-    "--cov=claude_extractor",
+    "--cov=nano_agents",
     "--cov-report=term-missing",
     "--cov-report=html",
     "--cov-report=xml",
@@ -93,12 +94,13 @@ python_functions = ["test_*"]
 asyncio_mode = "auto"
 
 [tool.coverage.run]
-source = ["src"]
+source = ["nano_agents", "scripts"]
 omit = [
     "*/tests/*",
     "*/test_*.py",
     "*/__pycache__/*",
     "*/site-packages/*",
+    "*/venv/*",
 ]
 
 [tool.coverage.report]
