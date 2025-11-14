@@ -1,22 +1,26 @@
 """
-Claude Conversation Extractor
+Conversation Archaeologist
 
-A comprehensive tool for extracting, analyzing, and exporting Claude.ai conversations.
+A nano-agent based tool for extracting, analyzing, and exporting Claude.ai conversations.
+
+Phase 1: MVP - Extract single conversations with JSON output
 """
 
 __version__ = "0.1.0"
-__author__ = "Your Name"
-__email__ = "your.email@example.com"
+__author__ = "Conversation Archaeologist Team"
 
-from claude_extractor.models.conversation import Conversation
-from claude_extractor.models.message import Message
-from claude_extractor.models.artifact import Artifact
-from claude_extractor.models.branch import Branch
+# Import nano-agents for easy access
+from nano_agents.url_parser import URLParser, ConversationIdentifier
+from nano_agents.api_fetcher import APIDataFetcher, FetchStrategy
+from nano_agents.branch_detector import BranchDetector, ConversationTree, MessageNode
 
 __all__ = [
-    "Conversation",
-    "Message",
-    "Artifact",
-    "Branch",
+    "URLParser",
+    "ConversationIdentifier",
+    "APIDataFetcher",
+    "FetchStrategy",
+    "BranchDetector",
+    "ConversationTree",
+    "MessageNode",
     "__version__",
 ]

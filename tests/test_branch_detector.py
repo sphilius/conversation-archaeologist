@@ -224,7 +224,7 @@ class TestBranchDetectorComplexCases:
     def test_long_linear_then_branch(self):
         """Test long linear conversation followed by branch."""
         messages = []
-        
+
         # Create 10 linear messages
         for i in range(10):
             messages.append({
@@ -234,21 +234,22 @@ class TestBranchDetectorComplexCases:
                 "content": f"Message {i+1}",
                 "timestamp": f"2024-01-01T10:00:{i:02d}Z"
             })
-        
-        # Add branch at message 10
+
+        # Add TWO children to message 9 to create an actual branch
         messages.append({
             "id": "msg_11",
-            "parent_id": "msg_10",
+            "parent_id": "msg_9",
             "role": "assistant",
             "content": "Alternative response",
             "timestamp": "2024-01-01T10:00:10Z"
         })
-        
+
         tree = self.detector.build_tree(messages)
-        
+
         assert len(tree.nodes) == 11
-        assert len(tree.branches) == 2
-        assert tree.nodes["msg_10"].children[0].id in ["msg_11"]
+        assert len(tree.branches) == 2  # main and branch_1
+        # msg_9 should have two children: msg_10 and msg_11
+        assert len(tree.nodes["msg_9"].children) == 2
 
 
 if __name__ == "__main__":
